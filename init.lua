@@ -1,0 +1,6 @@
+require('options')
+require('plugins')
+require('keymaps')
+--require('colorscheme')
+require('lsp')
+vim.cmd[[colorscheme tokyonight]]
