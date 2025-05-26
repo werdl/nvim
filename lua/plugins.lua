@@ -1,76 +1,131 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     "williamboman/mason.nvim",
-	"williamboman/mason-lspconfig.nvim",
-	{
-    "neovim/nvim-lspconfig",
-    config = function()
-      -- Setup rust-analyzer
-      require'lspconfig'.rust_analyzer.setup({
-        settings = {
-          ["rust-analyzer"] = {
-            cargo = {
-              runBuildScripts = true,
-            },
-            procMacro = {
-              enable = true,
-            },
-          },
+    "williamboman/mason-lspconfig.nvim",
+    {
+        "iamcco/markdown-preview.nvim",
+        build = "cd app && npm install",
+        ft = "markdown",
+        keys = {
+            { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" }
+        }
+    },
+    "mrcjkb/rustaceanvim",
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            require 'lspconfig'.clangd.setup {}
+            -- pyright
+            require 'lspconfig'.pyright.setup {}
+            -- gopls
+            require 'lspconfig'.gopls.setup {}
+            -- lua
+            require 'lspconfig'.lua_ls.setup {
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { 'vim' },
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                    },
+                },
+            }
+            -- html/css/js
+            require 'lspconfig'.html.setup {}
+            require 'lspconfig'.cssls.setup {}
+            require 'lspconfig'.ts_ls.setup {}
+        end,
+    },
+    {
+        'dnlhc/glance.nvim',
+        config = function()
+            require('glance').setup()
+            vim.keymap.set('n', 'gd', '<CMD>Glance definitions<CR>')
+            vim.keymap.set('n', 'gr', '<CMD>Glance references<CR>')
+            vim.keymap.set('n', 'gi', '<CMD>Glance implementations<CR>')
+            vim.keymap.set('n', 'gD', '<CMD>Glance type_definitions<CR>')
+        end,
+    },
+    "folke/which-key.nvim",
+    "tpope/vim-surround",
+    "tpope/vim-fugitive",
+    "tpope/vim-commentary",
+    "famiu/feline.nvim",
+    "voldikss/vim-floaterm",
+    "willothy/nvim-cokeline",
+    "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-nvim-lsp",
+    "ray-x/lsp_signature.nvim",
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup({
+                disable_filetype = { "TelescopePrompt" },
+            })
+        end,
+    },
+    "SmiteshP/nvim-navic",
+    "github/copilot.vim",
+    {
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        lazy = false,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
         },
-      })
-    end,
-  },
-  "folke/which-key.nvim",
-  {
-    "simrat39/rust-tools.nvim",
-    config = function()
-      require('rust-tools').setup({
-        server = {
-          settings = {
-            ["rust-analyzer"] = {
-              cargo = {
-                runBuildScripts = true,
-              },
-              procMacro = {
-                enable = true,
-              },
-            },
-          },
-        },
-      })
-    end,
-  },
-    
-  "github/copilot.vim",
-  {
-      "nvim-tree/nvim-tree.lua",
-  version = "*",
-  lazy = false,
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-  },
-  config = function()
-    require("nvim-tree").setup {}
-  end,
-},
-{
-  "folke/tokyonight.nvim",
-  lazy = false,
-  priority = 10000,
-  opts = {},
-},
+        config = function()
+            require("nvim-tree").setup {}
+        end,
+    },
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            local builtin = require('telescope.builtin')
+            vim.keymap.set('n', '<leader>fd', builtin.lsp_definitions)
+            vim.keymap.set('n', '<leader>fr', builtin.lsp_references)
+            vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols)
+            vim.keymap.set('n', '<leader>fw', builtin.lsp_workspace_symbols)
+            vim.keymap.set('n', '<leader>di', builtin.diagnostics)
+        end,
+    },
+    "mattn/emmet-vim",
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 10000,
+        opts = {},
+    },
+    {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate',
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                ensure_installed = { 'rust', 'c', 'python' },
+                highlight = { enable = true },
+                indent = { enable = true },
+            }
+        end
+    },
     {
         "saghen/blink.cmp",
         -- optional: provides snippets for the snippet source

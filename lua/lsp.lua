@@ -23,13 +23,4 @@ vim.diagnostic.config({
     source = "always",  -- Show source of error in floating window
   },
 })
-require'lspconfig'.rust_analyzer.setup({
-  settings = {
-    ["rust-analyzer"] = {
-      diagnostics = {
-        enable = true,
-      },
-    },
-  },
-})
-
+vim.lsp.inlay_hint.enable()
