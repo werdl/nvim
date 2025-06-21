@@ -19,8 +19,6 @@ require('lsp_signature').on_attach({
   }
 })
 
-vim.cmd[[colorscheme tokyonight]]
-
 vim.diagnostic.config({
   float = { border = 'rounded' },
 })
@@ -38,3 +36,5 @@ function DiagnosticCounts()
   return string.format("E:%d W:%d H:%d I:%d", e, w, h, i)
 end
 vim.lsp.inlay_hint.enable()
+
+vim.cmd[[colorscheme tokyonight]]

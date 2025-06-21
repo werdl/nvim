@@ -8,10 +8,10 @@ require('mason').setup({
     }
 })
 
-require('mason-lspconfig').setup({
+--require('mason-lspconfig').setup({
     -- A list of servers to automatically install if they're not already installed
-    ensure_installed = { 'pylsp', 'lua_ls', 'rust_analyzer' },
-})
+  --  ensure_installed = { 'pylsp', 'lua_ls', 'rust_analyzer' },
+--})
 
 vim.o.updatetime = 250  -- Update diagnostics every 250 ms
 vim.diagnostic.config({
@@ -24,3 +24,5 @@ vim.diagnostic.config({
   },
 })
 vim.lsp.inlay_hint.enable()
+require("go").setup()
+require("lspconfig").gopls.setup{}
