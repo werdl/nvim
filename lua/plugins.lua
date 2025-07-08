@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     "williamboman/mason.nvim",
+    { "ray-x/go.nvim", dependencies = { "ray-x/guihua.lua" }, build = ":GoInstallBinaries" },
     "williamboman/mason-lspconfig.nvim",
     {
         "iamcco/markdown-preview.nvim",

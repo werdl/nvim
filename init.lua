@@ -19,8 +19,6 @@ require('lsp_signature').on_attach({
     }
 })
 
-vim.cmd [[colorscheme tokyonight]]
-
 vim.diagnostic.config({
     float = { border = 'rounded' },
 })
@@ -85,3 +83,4 @@ local groups = {
 for _, group in ipairs(groups) do
     vim.cmd("hi " .. group .. " guibg=NONE ctermbg=NONE")
 end
+vim.cmd[[colorscheme tokyonight]]
