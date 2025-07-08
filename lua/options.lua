@@ -19,3 +19,14 @@ vim.opt.incsearch = true -- search as chars are entered
 vim.opt.hlsearch = true -- highlight matches
 vim.opt.ignorecase = true -- ignore case
 vim.opt.smartcase = true -- but make case sensitive if an uppercase entered
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "NvimTree",
+  callback = function()
+    vim.opt_local.fillchars:append { eob = " " }  -- replace tildes with spaces
+    vim.cmd("hi! link EndOfBuffer Normal")        -- or link EndOfBuffer to Normal to hide tildes
+  end,
+})
+
+vim.opt.fillchars = vim.opt.fillchars + { eob = " " }
+vim.cmd("highlight EndOfBuffer guifg=NONE guibg=NONE")
