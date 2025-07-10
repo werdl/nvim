@@ -38,6 +38,7 @@ end
 
 vim.lsp.inlay_hint.enable()
 
+vim.cmd[[colorscheme tokyonight]]
 vim.opt.termguicolors = true
 
 local groups = {
@@ -83,4 +84,3 @@ local groups = {
 for _, group in ipairs(groups) do
     vim.cmd("hi " .. group .. " guibg=NONE ctermbg=NONE")
 end
-vim.cmd[[colorscheme tokyonight]]
