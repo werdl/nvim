@@ -24,6 +24,7 @@ require("lazy").setup({
             { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" }
         }
     },
+    "vyfor/cord.nvim",
     "mrcjkb/rustaceanvim",
     {
         "neovim/nvim-lspconfig",
@@ -75,6 +76,7 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
     "ray-x/lsp_signature.nvim",
+    "github/copilot.vim",
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
@@ -85,7 +87,6 @@ require("lazy").setup({
         end,
     },
     "SmiteshP/nvim-navic",
-    "github/copilot.vim",
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",

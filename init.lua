@@ -84,3 +84,5 @@ local groups = {
 for _, group in ipairs(groups) do
     vim.cmd("hi " .. group .. " guibg=NONE ctermbg=NONE")
 end
+
+
