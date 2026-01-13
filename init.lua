@@ -59,7 +59,6 @@ local groups = {
     "CursorLine",
     "CursorColumn",
     "ColorColumn",
-    "Visual",
     "Search",
     "NvimTreeNormal",
     "NvimTreeNormalNC",
